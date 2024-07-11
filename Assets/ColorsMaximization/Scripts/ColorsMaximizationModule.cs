@@ -289,7 +289,9 @@ public class ColorsMaximizationModule : MonoBehaviour {
 		match = Regex.Match(str, @"^([1-5])[;,]([1-4])$");
 		if (match.Success) return buttonsGrid[int.Parse(match.Groups[1].Value) - 1][int.Parse(match.Groups[2].Value) - 1].Selectable;
 		if (Regex.IsMatch(str, @"^0|[1-9]\d*$")) {
-			int index = int.Parse(str) - 1;
+			int index;
+			if (!int.TryParse(str, out index) || index <= 0) return null;
+			index--;
 			int row = index / WIDTH;
 			if (row >= HEIGHT) return null;
 			return buttonsGrid[index % WIDTH][row].Selectable;
